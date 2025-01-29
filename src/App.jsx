@@ -1,10 +1,32 @@
 import background from "./assets/background.svg";
 import Authentication from "./components/Authentication";
+import { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 function App() {
+  const container = useRef(null);
+  useGSAP(
+    () => {
+      gsap.from("#title", {
+        delay: 0.2,
+        opacity: 0,
+        duration: 0.5,
+      });
+    },
+    { scope: container }
+  );
   return (
-    <div className="bg-[#0B1120] flex flex-col h-screen items-center justify-center">
-      <h1 className="text-white absolute z-10 top-10 text-4xl font-bold">BeyondChats</h1>
+    <div
+      ref={container}
+      className="bg-[#0B1120] flex flex-col h-screen items-center justify-center"
+    >
+      <h1
+        id="title"
+        className="text-white absolute z-10 top-10 text-4xl font-bold"
+      >
+        BeyondChats
+      </h1>
       <div className="relative z-10">
         <Authentication />
       </div>
