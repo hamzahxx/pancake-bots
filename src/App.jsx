@@ -19,7 +19,7 @@ function App() {
   return (
     <div
       ref={container}
-      className="bg-[#0B1120] flex flex-col h-screen items-center justify-center"
+      className="bg-[#0B1120] flex flex-col h-[80vh] md:h-screen items-center justify-center"
     >
       <h1
         id="title"
