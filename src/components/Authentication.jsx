@@ -70,20 +70,21 @@ const AuthComponent = () => {
         <div className="flex flex-col gap-y-4">
           <div className="flex flex-col md:flex-row justify-center gap-4">
             <button
-              className="w-56 md:w-26 h-10 cursor-pointer bg-blue-500 text-white rounded-lg"
+              className="w-56 md:w-34 h-10 cursor-pointer duration-150 bg-blue-500 text-white rounded-lg"
               onClick={() => handleFormChange("login")}
             >
               Login
             </button>
             <button
-              className="w-56 md:w-26 h-10 cursor-pointer bg-blue-500 text-white rounded-lg"
+              className="w-56 md:w-34 h-10 cursor-pointer duration-150 bg-blue-500 text-white rounded-lg"
               onClick={() => handleFormChange("signup")}
             >
               Sign Up
             </button>
           </div>
+          <div className="h-0.5 w-full bg-[#E0F2FE]"></div>
           <a
-            className="bg-white text-black w-56 h-10 rounded-lg flex justify-center items-center gap-2"
+            className="bg-white text-black w-56 md:w-72 h-10 duration-150 rounded-lg flex justify-center items-center gap-2"
             href="https://google.com"
             onClick={handleContinueWithGoogle}
           >
@@ -104,21 +105,21 @@ const AuthComponent = () => {
           >
             {activeForm === "signup" && (
               <input
-                className="bg-white text-black w-56 h-10 px-5 rounded-lg duration-150 focus:invalid:text-pink-600 focus:border-sky-500 focus:outline focus:outline-sky-500 focus:invalid:border-pink-500 focus:invalid:outline-pink-500 disabled:border-gray-200 disabled:bg-gray-50 disabled:text-gray-500 disabled:shadow-none dark:disabled:border-gray-700 dark:disabled:bg-gray-800/20"
+                className="bg-white text-black w-56 md:w-72 h-10 px-5 rounded-lg duration-150 focus:invalid:text-pink-600 focus:border-sky-500 focus:outline focus:outline-sky-500 focus:invalid:border-pink-500 focus:invalid:outline-pink-500 disabled:border-gray-200 disabled:bg-gray-50 disabled:text-gray-500 disabled:shadow-none dark:disabled:border-gray-700 dark:disabled:bg-gray-800/20"
                 type="name"
                 placeholder="Name"
                 required
               />
             )}
             <input
-              className="bg-white text-black w-56 h-10 px-5 rounded-lg duration-150 focus:invalid:text-pink-600 focus:border-sky-500 focus:outline focus:outline-sky-500 focus:invalid:border-pink-500 focus:invalid:outline-pink-500 disabled:border-gray-200 disabled:bg-gray-50 disabled:text-gray-500 disabled:shadow-none dark:disabled:border-gray-700 dark:disabled:bg-gray-800/20"
+              className="bg-white text-black w-56 md:w-72 h-10 px-5 rounded-lg duration-150 focus:invalid:text-pink-600 focus:border-sky-500 focus:outline focus:outline-sky-500 focus:invalid:border-pink-500 focus:invalid:outline-pink-500 disabled:border-gray-200 disabled:bg-gray-50 disabled:text-gray-500 disabled:shadow-none dark:disabled:border-gray-700 dark:disabled:bg-gray-800/20"
               type="email"
               placeholder="Email"
               required
             />
             <div className="h-10">
               <input
-                className="bg-white text-black w-56 h-10 px-5 pr-15 rounded-lg duration-150 focus:invalid:text-pink-600 focus:border-sky-500 focus:outline focus:outline-sky-500 focus:invalid:border-pink-500 focus:invalid:outline-pink-500 disabled:border-gray-200 disabled:bg-gray-50 disabled:text-gray-500 disabled:shadow-none dark:disabled:border-gray-700 dark:disabled:bg-gray-800/20"
+                className="bg-white text-black w-56 md:w-72 h-10 px-5 pr-15 rounded-lg duration-150 focus:invalid:text-pink-600 focus:border-sky-500 focus:outline focus:outline-sky-500 focus:invalid:border-pink-500 focus:invalid:outline-pink-500 disabled:border-gray-200 disabled:bg-gray-50 disabled:text-gray-500 disabled:shadow-none dark:disabled:border-gray-700 dark:disabled:bg-gray-800/20"
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 minLength={8}
@@ -133,7 +134,7 @@ const AuthComponent = () => {
               </button>
             </div>
             <button
-              className="bg-green-400 hover:bg-green-300 cursor-pointer duration-150 text-black hover:font-bold w-56 h-10 rounded-lg flex justify-center items-center"
+              className="bg-green-400 hover:bg-green-300 w-56 md:w-72 h-10 cursor-pointer duration-150 text-black hover:font-bold rounded-lg flex justify-center items-center"
               type="submit"
             >
               Submit
