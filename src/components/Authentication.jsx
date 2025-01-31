@@ -3,12 +3,17 @@ import googleIcon from "../assets/google-icon.svg";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
-const AuthComponent = () => {
+const AuthComponent = (props) => {
   const [activeForm, setActiveForm] = useState("initial");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    login: true,
+  });
+
   const [showPassword, setShowPassword] = useState(false);
   const containerRef = useRef(null);
-  const loginRef = useRef(null);
-  const signupRef = useRef(null);
   const ANIMATION_DURATION = 0.3;
 
   function handleFormChange(form) {
@@ -33,6 +38,15 @@ const AuthComponent = () => {
     });
   }
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    console.log(formData);
+  };
+
   const handleContinueWithGoogle = () => {
     // Handle Google authentication logic here
     console.log("Continue with Google");
@@ -43,14 +57,8 @@ const AuthComponent = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    if (activeForm == "login") {
-      console.log("Login form submitted");
-      handleFormChange("initial");
-    } else if (activeForm == "signup") {
-      console.log("Signup form submitted");
-      handleFormChange("initial");
-    }
+    // eslint-disable-next-line react/prop-types
+    props.onSubmit(formData);
   };
 
   useGSAP(
@@ -95,10 +103,7 @@ const AuthComponent = () => {
       )}
 
       {(activeForm === "login" || activeForm === "signup") && (
-        <div
-          className="flex"
-          ref={activeForm === "login" ? loginRef : signupRef}
-        >
+        <div className="flex">
           <form
             className="flex flex-col gap-y-4 justify-between items-center"
             onSubmit={handleSubmit}
@@ -108,6 +113,8 @@ const AuthComponent = () => {
                 className="bg-white text-black w-56 md:w-72 h-10 px-5 rounded-lg duration-150 focus:invalid:text-pink-600 focus:border-sky-500 focus:outline focus:outline-sky-500 focus:invalid:border-pink-500 focus:invalid:outline-pink-500 disabled:border-gray-200 disabled:bg-gray-50 disabled:text-gray-500 disabled:shadow-none dark:disabled:border-gray-700 dark:disabled:bg-gray-800/20"
                 type="name"
                 placeholder="Name"
+                name="name"
+                onChange={handleChange}
                 required
               />
             )}
@@ -115,6 +122,8 @@ const AuthComponent = () => {
               className="bg-white text-black w-56 md:w-72 h-10 px-5 rounded-lg duration-150 focus:invalid:text-pink-600 focus:border-sky-500 focus:outline focus:outline-sky-500 focus:invalid:border-pink-500 focus:invalid:outline-pink-500 disabled:border-gray-200 disabled:bg-gray-50 disabled:text-gray-500 disabled:shadow-none dark:disabled:border-gray-700 dark:disabled:bg-gray-800/20"
               type="email"
               placeholder="Email"
+              name="email"
+              onChange={handleChange}
               required
             />
             <div className="h-10">
@@ -122,6 +131,8 @@ const AuthComponent = () => {
                 className="bg-white text-black w-56 md:w-72 h-10 px-5 pr-15 rounded-lg duration-150 focus:invalid:text-pink-600 focus:border-sky-500 focus:outline focus:outline-sky-500 focus:invalid:border-pink-500 focus:invalid:outline-pink-500 disabled:border-gray-200 disabled:bg-gray-50 disabled:text-gray-500 disabled:shadow-none dark:disabled:border-gray-700 dark:disabled:bg-gray-800/20"
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
+                name="password"
+                onChange={handleChange}
                 minLength={8}
                 required
               />

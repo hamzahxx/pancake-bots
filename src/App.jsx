@@ -1,10 +1,17 @@
 import background from "./assets/background.svg";
 import Authentication from "./components/Authentication";
-import { useRef } from "react";
+import { useState, useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
 function App() {
+  const [userData, setUserData] = useState({});
+  const handleUserData = (data) => {
+    setUserData(data);
+  };
+
+  const { name, email, password, login } = userData;
+
   const container = useRef(null);
   useGSAP(
     () => {
@@ -28,7 +35,7 @@ function App() {
         BeyondChats
       </h1>
       <div className="relative z-10">
-        <Authentication />
+        {!login && <Authentication onSubmit={handleUserData} />}
       </div>
       <img
         className="min-w-screen absolute bottom-0 lg:top-[-10px] z-[1]"
