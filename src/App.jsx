@@ -3,11 +3,17 @@ import Authentication from "./components/Authentication";
 import { useState, useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import Company from "./components/Company";
 
 function App() {
   const [userData, setUserData] = useState({});
+  const [companyData, setCompanyData] = useState({});
   const handleUserData = (data) => {
     setUserData(data);
+  };
+
+  const handleCompanyData = (data) => {
+    setCompanyData(data);
   };
 
   const { name, email, password, login } = userData;
@@ -36,6 +42,7 @@ function App() {
       </h1>
       <div className="relative z-10">
         {!login && <Authentication onSubmit={handleUserData} />}
+        {login && <Company onSubmit={handleCompanyData} />}
       </div>
       <img
         className="min-w-screen absolute bottom-0 lg:top-[-10px] z-[1]"
