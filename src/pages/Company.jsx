@@ -4,6 +4,7 @@ function Company(props) {
   const [companyData, setCompanyData] = useState({
     companyName: "",
     url: "",
+    isCompany: true,
   });
   const handleChange = (e) => {
     const { name, value } = e.target;

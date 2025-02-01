@@ -1,23 +1,28 @@
-import background from "./assets/background.svg";
-import Authentication from "./components/Authentication";
+// Function Imports
 import { useState, useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import Company from "./components/Company";
+
+// Asset & Pages Imports
+import background from "./assets/background.svg";
+import Authentication from "./pages/Authentication";
+import Company from "./pages/Company";
 
 function App() {
+  // User State
   const [userData, setUserData] = useState({});
-  const [companyData, setCompanyData] = useState({});
   const handleUserData = (data) => {
     setUserData(data);
   };
+  const { name, email, password, login } = userData;
 
+  // Company State
+  const [companyData, setCompanyData] = useState({});
   const handleCompanyData = (data) => {
     setCompanyData(data);
   };
 
-  const { name, email, password, login } = userData;
-
+  // Animation Logic
   const container = useRef(null);
   useGSAP(
     () => {
