@@ -3,6 +3,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import confetti from "canvas-confetti";
 import { FaCopy, FaRegEnvelope, FaCheck } from "react-icons/fa";
+import ChatInterface from "../components/ChatIntereface";
 
 function IntegrationSection(props) {
   const [showIntegrationOptions, setShowIntegrationOptions] = useState(false);
@@ -58,16 +59,20 @@ function IntegrationSection(props) {
     <div className="p-4 mx-auto">
       {/* Test Chatbot Section */}
       <div className="mb-8 flex flex-col items-center">
-        <button className="integration-button bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 transition-colors w-[83vw] md:w-full mb-4">
+        <button className="integration-button bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors w-[83vw] md:w-full mb-4">
           Test Chatbot
         </button>
         <div className="border rounded-lg p-4">
           <iframe
             // eslint-disable-next-line react/prop-types
             src={props.companyURL}
-            className="w-[83vw] h-[96vh] border-none rounded-t-lg"
+            className="w-[83vw] h-[96vh] border-none rounded-t-lg overflow-hidden"
+            scrolling="no"
             title="Chatbot Preview"
           />
+          <div className="relative">
+            <ChatInterface />
+          </div>
           <div className="bg-gray-800 p-2 text-center rounded-b-lg">
             <a href="#feedback" className="text-blue-400 hover:text-blue-300">
               Chatbot not working as intended? Share feedback
@@ -95,17 +100,21 @@ function IntegrationSection(props) {
 
       {/* Integration Options Modal */}
       {showIntegrationOptions && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+        <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
           <div className="bg-gray-800 rounded-lg p-6 max-w-md w-full">
-            <h3 className="text-xl font-bold mb-4 text-white">Integration Options</h3>
+            <h3 className="text-xl font-bold mb-4 text-white">
+              Integration Options
+            </h3>
 
             <div className="mb-4">
               <h4 className="font-semibold mb-2 text-white">Copy-Paste Code</h4>
               <div className="bg-gray-700 p-4 rounded relative pr-11">
-                <pre className="text-sm overflow-x-auto text-white">{integrationCode}</pre>
+                <pre className="text-sm overflow-x-auto text-white">
+                  {integrationCode}
+                </pre>
                 <button
                   onClick={copyToClipboard}
-                  className="absolute top-2 right-2 p-2 hover:bg-gray-600 rounded"
+                  className="absolute top-2 right-2 p-2 text-gray-300 hover:bg-gray-600 rounded"
                 >
                   {copied ? <FaCheck className="text-green-400" /> : <FaCopy />}
                 </button>
@@ -113,7 +122,9 @@ function IntegrationSection(props) {
             </div>
 
             <div className="mb-4">
-              <h4 className="font-semibold mb-2 text-white">Email Instructions</h4>
+              <h4 className="font-semibold mb-2 text-white">
+                Email Instructions
+              </h4>
               <div className="flex gap-2">
                 <input
                   type="email"
@@ -143,7 +154,7 @@ function IntegrationSection(props) {
 
       {/* Test Integration Results */}
       {testIntegrationStatus !== "pending" && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+        <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
           <div className="bg-gray-800 rounded-lg p-8 max-w-md w-full text-center">
             {testIntegrationStatus === "checking" ? (
               <div className="animate-pulse text-xl text-white">
