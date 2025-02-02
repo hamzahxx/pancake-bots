@@ -15,15 +15,16 @@ function IntegrationSection(props) {
 
   useGSAP(() => {
     const tl = gsap.timeline();
+    tl.from(".integration-button-1", { opacity: 0, y: 20, duration: 0.3 });
+    tl.from("#frame", { opacity: 0, y: 20, duration: 0.3 });
+    tl.from(".chatbot-button", { opacity: 0, y: 20, duration: 0.3 });
+
     tl.from(".integration-button", {
       opacity: 0,
       y: 20,
       stagger: 0.2,
-      duration: 0.5,
-      delay: 0.5,
+      duration: 0.3,
     });
-
-    tl.from("iframe", { opacity: 0, y: 20, duration: 0.5 }, "-=0.5");
   });
 
   const runConfetti = () => {
@@ -59,10 +60,10 @@ function IntegrationSection(props) {
     <div className="p-4 mx-auto">
       {/* Test Chatbot Section */}
       <div className="mb-8 flex flex-col items-center">
-        <button className="integration-button bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors w-[83vw] md:w-full mb-4">
+        <button className="integration-button-1 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors w-[83vw] md:w-full mb-4">
           Test Chatbot
         </button>
-        <div className="border rounded-lg p-4">
+        <div id="frame" className="border rounded-lg p-4">
           <iframe
             // eslint-disable-next-line react/prop-types
             src={props.companyURL}
@@ -70,7 +71,7 @@ function IntegrationSection(props) {
             scrolling="no"
             title="Chatbot Preview"
           />
-          <div className="relative">
+          <div className="chatbot-button relative">
             <ChatInterface />
           </div>
           <div className="bg-gray-800 p-2 text-center rounded-b-lg">
