@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import confetti from "canvas-confetti";
@@ -11,7 +11,27 @@ function IntegrationSection(props) {
   const [testIntegrationStatus, setTestIntegrationStatus] = useState("pending");
   const [email, setEmail] = useState("");
 
+  const integrationModalRef = useRef(null);
+  const testModalRef = useRef(null);
+  const containerRef = useRef(null);
+
   const integrationCode = `<script src="https://cdn.beyondchats.com/chatbot.js" data-api-key="YOUR_API_KEY"></script>`;
+
+  const handleIntegrationModalClose = () => {
+    gsap.to(integrationModalRef.current, {
+      opacity: 0,
+      duration: 0.3,
+      onComplete: () => setShowIntegrationOptions(false),
+    });
+  };
+
+  const handleTestModalClose = () => {
+    gsap.to(testModalRef.current, {
+      opacity: 0,
+      duration: 0.3,
+      onComplete: () => setTestIntegrationStatus("pending"),
+    });
+  };
 
   useGSAP(() => {
     const tl = gsap.timeline();
@@ -27,6 +47,32 @@ function IntegrationSection(props) {
     });
   });
 
+  useGSAP(
+    () => {
+      if (showIntegrationOptions) {
+        gsap.fromTo(
+          integrationModalRef.current,
+          { opacity: 0 },
+          { opacity: 1, duration: 0.3 }
+        );
+      }
+    },
+    { dependencies: [showIntegrationOptions] }
+  );
+
+  useGSAP(
+    () => {
+      if (testIntegrationStatus !== "pending") {
+        gsap.fromTo(
+          testModalRef.current,
+          { opacity: 0 },
+          { opacity: 1, duration: 0.3 }
+        );
+      }
+    },
+    { dependencies: [testIntegrationStatus] }
+  );
+
   const runConfetti = () => {
     confetti({
       particleCount: 100,
@@ -39,9 +85,16 @@ function IntegrationSection(props) {
     // Simulate integration check
     setTestIntegrationStatus("checking");
     setTimeout(() => {
-      const isSuccess = Math.random() > 0.2; // 80% success rate
-      setTestIntegrationStatus(isSuccess ? "success" : "failed");
-      if (isSuccess) runConfetti();
+      const isSuccess = Math.random() > 0.2;
+      gsap.to(testModalRef.current, {
+        opacity: 0,
+        duration: 0.2,
+        onComplete: () => {
+          setTestIntegrationStatus(isSuccess ? "success" : "failed");
+          gsap.to(testModalRef.current, { opacity: 1, duration: 0.1 });
+          if (isSuccess) runConfetti();
+        },
+      });
     }, 2000);
   };
 
@@ -57,8 +110,7 @@ function IntegrationSection(props) {
   };
 
   return (
-    <div className="p-4 mx-auto">
-      {/* Test Chatbot Section */}
+    <div ref={containerRef} className="p-4 mx-auto">
       <div className="mb-8 flex flex-col items-center">
         <button className="integration-button-1 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors w-[83vw] md:w-full mb-4">
           Test Chatbot
@@ -81,8 +133,6 @@ function IntegrationSection(props) {
           </div>
         </div>
       </div>
-
-      {/* Integration Buttons */}
       <div className="grid gap-4 md:grid-cols-2 m-3 mb-8">
         <button
           className="integration-button bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-colors"
@@ -98,10 +148,11 @@ function IntegrationSection(props) {
           Test Integration
         </button>
       </div>
-
-      {/* Integration Options Modal */}
       {showIntegrationOptions && (
-        <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+        <div
+          ref={integrationModalRef}
+          className="fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4"
+        >
           <div className="bg-gray-800 rounded-lg p-6 max-w-md w-full">
             <h3 className="text-xl font-bold mb-4 text-white">
               Integration Options
@@ -145,17 +196,18 @@ function IntegrationSection(props) {
 
             <button
               className="mt-4 w-full bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded"
-              onClick={() => setShowIntegrationOptions(false)}
+              onClick={handleIntegrationModalClose}
             >
               Close
             </button>
           </div>
         </div>
       )}
-
-      {/* Test Integration Results */}
       {testIntegrationStatus !== "pending" && (
-        <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+        <div
+          ref={testModalRef}
+          className="fixed z-50 inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4"
+        >
           <div className="bg-gray-800 rounded-lg p-8 max-w-md w-full text-center">
             {testIntegrationStatus === "checking" ? (
               <div className="animate-pulse text-xl text-white">
@@ -203,7 +255,7 @@ function IntegrationSection(props) {
                 <p className="mb-4">Please try again or contact support</p>
                 <button
                   className="bg-gray-600 px-6 py-3 rounded-lg hover:bg-gray-700"
-                  onClick={() => setTestIntegrationStatus("pending")}
+                  onClick={handleTestModalClose}
                 >
                   Try Again
                 </button>

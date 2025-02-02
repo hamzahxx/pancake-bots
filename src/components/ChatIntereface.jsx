@@ -11,7 +11,6 @@ const ChatInterface = () => {
     if (newMessage.trim()) {
       setMessages([...messages, { text: newMessage, isUser: true }]);
       setNewMessage("");
-      // Add dummy bot response if needed
       setTimeout(() => {
         setMessages((prev) => [
           ...prev,
@@ -23,12 +22,11 @@ const ChatInterface = () => {
 
   return (
     <div className="absolute inset-0 pointer-events-none">
-      {/* Floating Chat Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={`absolute bottom-4 right-4 z-10 p-4 rounded-full shadow-lg transition-all duration-300 ${
           isOpen ? "bg-red-500 rotate-90" : "bg-blue-500"
-        } pointer-events-auto`} // Changed to absolute
+        } pointer-events-auto`}
       >
         {isOpen ? (
           <FiX className="text-white text-xl" />
@@ -36,17 +34,14 @@ const ChatInterface = () => {
           <FiMessageSquare className="text-white text-xl" />
         )}
       </button>
-
-      {/* Chat Container */}
       <div
         className={`absolute bottom-20 right-4 w-70 md:w-80 bg-white rounded-lg shadow-xl transition-all duration-300 transform ${
           isOpen
             ? "opacity-100 translate-y-0"
             : "opacity-0 translate-y-4 pointer-events-none"
-        } pointer-events-auto`} // Changed to absolute
+        } pointer-events-auto`}
       >
         <div className="flex flex-col h-96">
-          {/* Chat Header */}
           <div className="bg-blue-500 text-white p-4 rounded-t-lg flex justify-between items-center">
             <h3 className="font-semibold">Chat Support</h3>
             <button
@@ -56,8 +51,6 @@ const ChatInterface = () => {
               <FiX className="text-lg" />
             </button>
           </div>
-
-          {/* Messages Container */}
           <div className="flex-1 p-4 overflow-y-auto bg-gray-50">
             {messages.map((message, index) => (
               <div
@@ -79,8 +72,6 @@ const ChatInterface = () => {
             ))}
             <div ref={messagesEndRef} />
           </div>
-
-          {/* Input Area */}
           <div className="p-4 border-t border-gray-200">
             <div className="flex gap-2">
               <input
@@ -100,15 +91,6 @@ const ChatInterface = () => {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Website Preview Iframe */}
-      <div className="h-full w-full">
-        <iframe
-          src="/dummy-chatbot"
-          className="w-full h-full border-none rounded-lg"
-          title="Chatbot Preview"
-        />
       </div>
     </div>
   );

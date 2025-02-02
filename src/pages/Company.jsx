@@ -66,8 +66,6 @@ function Company(props) {
 
   const handleSubmit = contextSafe((e) => {
     e.preventDefault();
-
-    // Animate form exit
     gsap.to(formRef.current, {
       opacity: 0,
       duration: 0.5,
@@ -100,14 +98,12 @@ function Company(props) {
   useGSAP(
     () => {
       if (isSubmitted) {
-        // Animate results container entrance
         gsap.from(resultsRef.current, {
           opacity: 0,
           duration: 0.8,
           ease: "power2.out",
         });
 
-        // Animate individual scraped items
         gsap.from(".scraped-item", {
           opacity: 0,
           y: -30,
