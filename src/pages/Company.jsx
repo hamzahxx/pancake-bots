@@ -87,8 +87,14 @@ function Company(props) {
   };
 
   const sendData = (data) => {
-    // eslint-disable-next-line react/prop-types
-    props.onSubmit(data);
+    gsap.to(containerRef.current, {
+      opacity: 0,
+      duration: 0.3,
+      onComplete: () => {
+        // eslint-disable-next-line react/prop-types
+        props.onSubmit(data);
+      },
+    });
   };
 
   useGSAP(

@@ -28,6 +28,7 @@ function App() {
 
   // Company data state
   const [companyData, setCompanyData] = useState({});
+  const { isCompany } = companyData;
   const handleCompanyData = (data) => {
     setCompanyData(data);
   };
@@ -70,11 +71,12 @@ function App() {
       </div>
       <div className="flex flex-col h-full md:h-[80vh] items-center justify-center">
         <div id="component-container">
-          {!login ? (
+          {!login && (
             <div className="h-[85vh] pb-30 md:h-[80vh] flex items-center justify-center">
               <Authentication onSubmit={handleUserData} />
             </div>
-          ) : (
+          )}
+          {login && !isCompany && (
             <div className="h-[full] pb-30">
               <Company onSubmit={handleCompanyData} />
             </div>
