@@ -126,7 +126,7 @@ function Company(props) {
       {!isSubmitted ? (
         <form
           ref={formRef}
-          className="h-[70vh] md:h-[80vh] flex flex-col items-center gap-y-4 justify-center w-full"
+          className="h-[70vh] md:h-[80vh] flex flex-col items-center gap-y-4 pb-15 md:pb-25 justify-center w-full"
           onSubmit={handleSubmit}
         >
           <input
