@@ -4,7 +4,6 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
 // Asset & Pages Imports
-import background from "./assets/background.svg";
 import Authentication from "./pages/Authentication";
 import Company from "./pages/Company";
 
@@ -57,30 +56,30 @@ function App() {
   );
 
   return (
-    <div className="bg-[#0b1120]" ref={container}>
-      <div className="relative z-10 flex justify-around items-center py-4">
-        <h1 id="title" className="text-white relative z-10 text-4xl font-bold">
+    <div className="bg-[#0b1120] h-full" ref={container}>
+      <div className="flex justify-around h-[20vh] items-center py-4">
+        <h1 id="title" className="text-white text-4xl font-bold">
           BeyondChats
         </h1>
 
         {(name || email) && (
-          <h1 className="nav-user hidden md:block text-white relative z-10 text-3xl">
+          <h1 className="nav-user hidden md:block text-white text-3xl">
             {name || email}
           </h1>
         )}
       </div>
-      <div className="flex flex-col h-[80vh] items-center justify-center">
-        <div className="relative z-10" id="component-container">
+      <div className="flex flex-col h-full md:h-[80vh] items-center justify-center">
+        <div id="component-container">
           {!login ? (
-            <Authentication onSubmit={handleUserData} />
+            <div className="h-[85vh] pb-30 md:h-[80vh] flex items-center justify-center">
+              <Authentication onSubmit={handleUserData} />
+            </div>
           ) : (
-            <Company onSubmit={handleCompanyData} />
+            <div className="h-[full] pb-30">
+              <Company onSubmit={handleCompanyData} />
+            </div>
           )}
         </div>
-        <img
-          className="min-w-screen absolute bottom-0 lg:top-[-10px] z-[1]"
-          src={background}
-        />
       </div>
     </div>
   );
