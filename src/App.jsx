@@ -6,6 +6,7 @@ import gsap from "gsap";
 // Asset & Pages Imports
 import Authentication from "./pages/Authentication";
 import Company from "./pages/Company";
+import IntegrationSection from "./pages/Integration";
 
 function App() {
   // User data state
@@ -28,7 +29,7 @@ function App() {
 
   // Company data state
   const [companyData, setCompanyData] = useState({});
-  const { isCompany } = companyData;
+  const { url, isCompany } = companyData;
   const handleCompanyData = (data) => {
     setCompanyData(data);
   };
@@ -69,16 +70,21 @@ function App() {
           </h1>
         )}
       </div>
-      <div className="flex flex-col h-full md:h-[80vh] items-center justify-center">
+      <div className="flex flex-col h-full items-center justify-center">
         <div id="component-container">
           {!login && (
-            <div className="h-[85vh] pb-30 md:h-[80vh] flex items-center justify-center">
+            <div className="h-[85vh] md:h-[80vh] pb-40 md:pb-30 flex items-center justify-center">
               <Authentication onSubmit={handleUserData} />
             </div>
           )}
           {login && !isCompany && (
             <div className="h-[full] pb-30">
               <Company onSubmit={handleCompanyData} />
+            </div>
+          )}
+          {login && isCompany && (
+            <div className="h-full">
+              <IntegrationSection companyURL={url} />
             </div>
           )}
         </div>

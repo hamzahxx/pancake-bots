@@ -1,0 +1,207 @@
+import { useState } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import confetti from "canvas-confetti";
+import { FaCopy, FaRegEnvelope, FaCheck } from "react-icons/fa";
+
+function IntegrationSection(props) {
+  const [showIntegrationOptions, setShowIntegrationOptions] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [testIntegrationStatus, setTestIntegrationStatus] = useState("pending");
+  const [email, setEmail] = useState("");
+
+  const integrationCode = `<script src="https://cdn.beyondchats.com/chatbot.js" data-api-key="YOUR_API_KEY"></script>`;
+
+  useGSAP(() => {
+    const tl = gsap.timeline();
+    tl.from(".integration-button", {
+      opacity: 0,
+      y: 20,
+      stagger: 0.2,
+      duration: 0.5,
+      delay: 0.5,
+    });
+
+    tl.from("iframe", { opacity: 0, y: 20, duration: 0.5 }, "-=0.5");
+  });
+
+  const runConfetti = () => {
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+    });
+  };
+
+  const handleTestIntegration = () => {
+    // Simulate integration check
+    setTestIntegrationStatus("checking");
+    setTimeout(() => {
+      const isSuccess = Math.random() > 0.2; // 80% success rate
+      setTestIntegrationStatus(isSuccess ? "success" : "failed");
+      if (isSuccess) runConfetti();
+    }, 2000);
+  };
+
+  const copyToClipboard = async () => {
+    await navigator.clipboard.writeText(integrationCode);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const sendEmailInstructions = () => {
+    console.log("Sending instructions to:", email);
+    setShowIntegrationOptions(false);
+  };
+
+  return (
+    <div className="p-4 mx-auto">
+      {/* Test Chatbot Section */}
+      <div className="mb-8 flex flex-col items-center">
+        <button className="integration-button bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 transition-colors w-[83vw] md:w-full mb-4">
+          Test Chatbot
+        </button>
+        <div className="border rounded-lg p-4">
+          <iframe
+            // eslint-disable-next-line react/prop-types
+            src={props.companyURL}
+            className="w-[83vw] h-[96vh] border-none rounded-t-lg"
+            title="Chatbot Preview"
+          />
+          <div className="bg-gray-800 p-2 text-center rounded-b-lg">
+            <a href="#feedback" className="text-blue-400 hover:text-blue-300">
+              Chatbot not working as intended? Share feedback
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* Integration Buttons */}
+      <div className="grid gap-4 md:grid-cols-2 m-3 mb-8">
+        <button
+          className="integration-button bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition-colors"
+          onClick={() => setShowIntegrationOptions(true)}
+        >
+          Integrate on Your Website
+        </button>
+
+        <button
+          className="integration-button bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors"
+          onClick={handleTestIntegration}
+        >
+          Test Integration
+        </button>
+      </div>
+
+      {/* Integration Options Modal */}
+      {showIntegrationOptions && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+          <div className="bg-gray-800 rounded-lg p-6 max-w-md w-full">
+            <h3 className="text-xl font-bold mb-4 text-white">Integration Options</h3>
+
+            <div className="mb-4">
+              <h4 className="font-semibold mb-2 text-white">Copy-Paste Code</h4>
+              <div className="bg-gray-700 p-4 rounded relative pr-11">
+                <pre className="text-sm overflow-x-auto text-white">{integrationCode}</pre>
+                <button
+                  onClick={copyToClipboard}
+                  className="absolute top-2 right-2 p-2 hover:bg-gray-600 rounded"
+                >
+                  {copied ? <FaCheck className="text-green-400" /> : <FaCopy />}
+                </button>
+              </div>
+            </div>
+
+            <div className="mb-4">
+              <h4 className="font-semibold mb-2 text-white">Email Instructions</h4>
+              <div className="flex gap-2">
+                <input
+                  type="email"
+                  placeholder="Developer's email"
+                  className="bg-gray-700 text-white p-2 rounded flex-1"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <button
+                  onClick={sendEmailInstructions}
+                  className="bg-blue-600 px-4 py-2 rounded hover:bg-blue-700"
+                >
+                  <FaRegEnvelope />
+                </button>
+              </div>
+            </div>
+
+            <button
+              className="mt-4 w-full bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded"
+              onClick={() => setShowIntegrationOptions(false)}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Test Integration Results */}
+      {testIntegrationStatus !== "pending" && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+          <div className="bg-gray-800 rounded-lg p-8 max-w-md w-full text-center">
+            {testIntegrationStatus === "checking" ? (
+              <div className="animate-pulse text-xl text-white">
+                Checking integration...
+              </div>
+            ) : testIntegrationStatus === "success" ? (
+              <>
+                <div className="text-4xl mb-4">🎉</div>
+                <h2 className="text-2xl font-bold mb-4 text-white">
+                  Integration Successful!
+                </h2>
+                <div className="grid gap-4 mb-6">
+                  <button className="bg-blue-600 text-white px-6 py-3 rounded-lg duration-150 hover:bg-blue-700">
+                    Explore Admin Panel
+                  </button>
+                  <button className="bg-green-600 text-white px-6 py-3 rounded-lg duration-150 hover:bg-green-700">
+                    Start Talking to Your Chatbot
+                  </button>
+                </div>
+                <div className="flex justify-center gap-4">
+                  <a
+                    href="#"
+                    className="text-white duration-150 hover:text-blue-400"
+                  >
+                    Twitter
+                  </a>
+                  <a
+                    href="#"
+                    className="text-white duration-150 hover:text-blue-400"
+                  >
+                    Facebook
+                  </a>
+                  <a
+                    href="#"
+                    className="text-white duration-150 hover:text-blue-400"
+                  >
+                    LinkedIn
+                  </a>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="text-4xl mb-4">⚠️</div>
+                <h2 className="text-xl mb-4">Integration Not Detected</h2>
+                <p className="mb-4">Please try again or contact support</p>
+                <button
+                  className="bg-gray-600 px-6 py-3 rounded-lg hover:bg-gray-700"
+                  onClick={() => setTestIntegrationStatus("pending")}
+                >
+                  Try Again
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default IntegrationSection;
