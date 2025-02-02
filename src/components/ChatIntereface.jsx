@@ -13,7 +13,10 @@ const ChatInterface = () => {
       setNewMessage("");
       // Add dummy bot response if needed
       setTimeout(() => {
-        setMessages(prev => [...prev, { text: "This is a dummy response", isUser: false }]);
+        setMessages((prev) => [
+          ...prev,
+          { text: "This is a dummy response", isUser: false },
+        ]);
       }, 1000);
     }
   };
@@ -36,7 +39,7 @@ const ChatInterface = () => {
 
       {/* Chat Container */}
       <div
-        className={`absolute bottom-20 right-4 w-80 bg-white rounded-lg shadow-xl transition-all duration-300 transform ${
+        className={`absolute bottom-20 right-4 w-70 md:w-80 bg-white rounded-lg shadow-xl transition-all duration-300 transform ${
           isOpen
             ? "opacity-100 translate-y-0"
             : "opacity-0 translate-y-4 pointer-events-none"
@@ -86,7 +89,7 @@ const ChatInterface = () => {
                 onChange={(e) => setNewMessage(e.target.value)}
                 onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
                 placeholder="Type your message..."
-                className="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                className="flex-1 border border-gray-300 rounded-lg w-1 md:w-auto pl-2 md:px-4 py-2 focus:outline-none focus:border-blue-500"
               />
               <button
                 onClick={handleSendMessage}
