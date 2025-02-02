@@ -126,7 +126,7 @@ function Company(props) {
       {!isSubmitted ? (
         <form
           ref={formRef}
-          className="h-[70vh] md:h-[80vh] flex flex-col items-center gap-y-5 justify-center w-full"
+          className="h-[70vh] md:h-[80vh] flex flex-col items-center gap-y-4 justify-center w-full"
           onSubmit={handleSubmit}
         >
           <input
@@ -139,7 +139,7 @@ function Company(props) {
           />
           <input
             className="bg-white text-black w-56 md:w-72 h-10 px-5 rounded-lg duration-150 focus:border-sky-500 focus:outline focus:outline-sky-500 disabled:border-gray-200 disabled:bg-gray-50 disabled:text-gray-500 disabled:shadow-none dark:disabled:border-gray-700 dark:disabled:bg-gray-800/20"
-            type="text"
+            type="url"
             name="url"
             placeholder="Company URL"
             onChange={handleChange}
@@ -159,7 +159,7 @@ function Company(props) {
           </button>
         </form>
       ) : (
-        <div ref={resultsRef} className="w-full max-w-4xl">
+        <div ref={resultsRef} className="w-full h-full py-12 max-w-4xl">
           <div className="grid grid-cols-1 md:grid-cols-3 h-full gap-4 px-10 mb-8">
             {scrapedData.map((item) => (
               <div
@@ -215,7 +215,10 @@ function Company(props) {
             </div>
           )}
 
-          <div className="flex justify-center gap-4 pt-2">
+          <div className="flex flex-col justify-center items-center gap-4 pt-2">
+            <div className="flex items-center text-gray-400">
+              <span className="animate-pulse">Training in progress...</span>
+            </div>
             <button
               className="bg-blue-500 hover:bg-blue-400 px-6 py-2 rounded-lg text-white transition-colors"
               onClick={() => {
@@ -224,9 +227,6 @@ function Company(props) {
             >
               Proceed to Next Step
             </button>
-            <div className="flex items-center text-gray-400">
-              <span className="animate-pulse">Training in progress...</span>
-            </div>
           </div>
         </div>
       )}

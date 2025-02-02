@@ -78,13 +78,13 @@ const AuthComponent = (props) => {
         <div className="flex flex-col gap-y-4">
           <div className="flex flex-col md:flex-row justify-center gap-4">
             <button
-              className="w-56 md:w-34 h-10 cursor-pointer duration-150 bg-blue-500 text-white rounded-lg"
+              className="w-56 md:w-34 h-10 cursor-pointer duration-150 bg-blue-500 hover:bg-blue-600 text-white rounded-lg"
               onClick={() => handleFormChange("login")}
             >
               Login
             </button>
             <button
-              className="w-56 md:w-34 h-10 cursor-pointer duration-150 bg-blue-500 text-white rounded-lg"
+              className="w-56 md:w-34 h-10 cursor-pointer duration-150 bg-blue-500 hover:bg-blue-600 text-white rounded-lg"
               onClick={() => handleFormChange("signup")}
             >
               Sign Up
