@@ -2,6 +2,8 @@
 
 This project implements a responsive UI/UX workflow for a chatbot onboarding process. The design focuses on user-friendly interactions, intuitive navigation, and a clean, modern aesthetic.  
 
+[Visit The Live Site](https://pancake-bots.vercel.app/)
+
 ## 🚀 Features  
 
 ### 1️⃣ User Registration  
@@ -38,7 +40,6 @@ This project implements a responsive UI/UX workflow for a chatbot onboarding pro
 - **Frontend:** React, Tailwind CSS, GSAP  
 - **State Management:** React Hooks  
 - **Hosting:** Vercel 
-
 ## 🎯 Project Highlights  
 ✔️ Mobile-responsive UI/UX  
 ✔️ Smooth animations using GSAP  
